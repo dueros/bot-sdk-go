@@ -17,27 +17,28 @@ const (
 	AUDIO_PLAYER_PROGRESS_REPORT_INTERVAL_ELAPSED = "AudioPlayer.ProgressReportIntervalElapsed"
 )
 
-type Requset struct {
-	Type string
+type Request struct {
+	Type   string
+	Common data.RequestPart
 }
 
 type IntentRequest struct {
 	Data data.IntentRequest
 	Nlu  *nlu.Dialog
-	Requset
+	Request
 }
 
 type LaunchRequest struct {
 	Data data.LaunchRequest
-	Requset
+	Request
 }
 
 type SessionEndedRequest struct {
 	Data data.SessionEndedRequest
-	Requset
+	Request
 }
 
 type EventRequest struct {
 	Data data.EventRequest
-	Requset
+	Request
 }

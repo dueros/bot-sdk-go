@@ -13,8 +13,9 @@ type System struct {
 }
 
 type User struct {
-	UserId   string
-	UserInfo UserInfo
+	UserId      string
+	AccessToken string
+	UserInfo    UserInfo
 }
 
 type UserInfo struct {
@@ -38,15 +39,16 @@ type baseRequest struct {
 	Timestamp string
 }
 
+// 公共请求体
 type RequestPart struct {
 	Version string
 	Session Session
 	Context Context
+	Request baseRequest
 }
 
 // 事件请求
 type EventRequest struct {
-	RequestPart
 	Request struct {
 		baseRequest
 		Token                string
@@ -56,7 +58,6 @@ type EventRequest struct {
 
 // 打开请求
 type LaunchRequest struct {
-	RequestPart
 	Request baseRequest
 }
 
@@ -67,7 +68,6 @@ type SessionEndedRequestBody struct {
 }
 
 type SessionEndedRequest struct {
-	RequestPart
 	Request SessionEndedRequestBody
 }
 
@@ -97,6 +97,5 @@ type IntentRequestBody struct {
 }
 
 type IntentRequest struct {
-	RequestPart
 	Request IntentRequestBody
 }

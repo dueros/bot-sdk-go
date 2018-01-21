@@ -22,9 +22,16 @@ func NewRequest(rawData string) interface{} {
 	requestType := getType(rawData)
 
 	jsonBlob := []byte(rawData)
+
+	common := data.RequestPart{}
+	if err := json.Unmarshal(jsonBlob, &common); err != nil {
+		fmt.Println(err)
+	}
+
 	if requestType == INENT_REQUEST {
 		request := IntentRequest{}
 		request.Type = requestType
+		request.Common = common
 		if err := json.Unmarshal(jsonBlob, &request.Data); err != nil {
 			fmt.Println(err)
 		}
@@ -33,6 +40,7 @@ func NewRequest(rawData string) interface{} {
 	} else if requestType == LAUNCH_REQUEST {
 		request := LaunchRequest{}
 		request.Type = requestType
+		request.Common = common
 		if err := json.Unmarshal(jsonBlob, &request.Data); err != nil {
 			fmt.Println(err)
 		}
@@ -40,6 +48,7 @@ func NewRequest(rawData string) interface{} {
 	} else if requestType == SESSION_ENDED_REQUEST {
 		request := SessionEndedRequest{}
 		request.Type = requestType
+		request.Common = common
 		if err := json.Unmarshal(jsonBlob, &request.Data); err != nil {
 			fmt.Println(err)
 		}
@@ -47,6 +56,7 @@ func NewRequest(rawData string) interface{} {
 	} else {
 		request := EventRequest{}
 		request.Type = requestType
+		request.Common = common
 		if err := json.Unmarshal(jsonBlob, &request.Data); err != nil {
 			fmt.Println(err)
 		}
@@ -56,20 +66,28 @@ func NewRequest(rawData string) interface{} {
 	return false
 }
 
+func (this *Request) GetUserId() string {
+	return this.Common.Context.System.User.UserId
+}
+
 func (this *Request) GetDeviceId() string {
-	return ""
+	return this.Common.Context.System.Device.DeviceId
 }
 
 //func (this *Request) getAudioPlayerContext() AudioPlayerContext{}
 
 func (this *Request) GetAccessToken() string {
-	return ""
+	return this.Common.Context.System.User.AccessToken
 }
 
 func (this *Request) GetTimestamp() string {
-	return ""
+	return this.Common.Request.Timestamp
+}
+
+func (this *Request) GetRequestId() string {
+	return this.Common.Request.RequestId
 }
 
 func (this *Request) GetBotId() string {
-	return ""
+	return this.Common.Context.System.Application.ApplicationId
 }
