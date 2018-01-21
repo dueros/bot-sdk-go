@@ -1,17 +1,9 @@
 package lib
 
-type AudioPlayer struct {
-	Bot
-}
+import (
+	"./req"
+)
 
-func NewAudioPlayer(rawRequest string) *AudioPlayer {
-	return &AudioPlayer{Bot{
-		intentHandler: make(map[string]func() ResponseData),
-		eventHandler:  make(map[string]func() ResponseData),
-		Request:       NewRequest(rawRequest),
-	}}
-}
-
-func (this *AudioPlayer) OnPlaybackStarted(fn func() ResponseData) {
-	this.AddEventListener(AUDIO_PLAYER_PLAYBACK_STARTED, fn)
+func (this *Bot) OnPlaybackStarted(fn func(bot *Bot, request *req.EventRequest)) {
+	this.AddEventListener(req.AUDIO_PLAYER_PLAYBACK_STARTED, fn)
 }

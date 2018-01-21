@@ -1,7 +1,8 @@
-package lib
+package req
 
 import (
-	"./data"
+	"../data"
+	"../nlu"
 )
 
 const (
@@ -22,10 +23,21 @@ type Requset struct {
 
 type IntentRequest struct {
 	Data data.IntentRequest
+	Nlu  *nlu.Dialog
 	Requset
 }
 
 type LaunchRequest struct {
 	Data data.LaunchRequest
+	Requset
+}
+
+type SessionEndedRequest struct {
+	Data data.SessionEndedRequest
+	Requset
+}
+
+type EventRequest struct {
+	Data data.EventRequest
 	Requset
 }

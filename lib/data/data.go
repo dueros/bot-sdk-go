@@ -44,6 +44,16 @@ type RequestPart struct {
 	Context Context
 }
 
+// 事件请求
+type EventRequest struct {
+	RequestPart
+	Request struct {
+		baseRequest
+		Token                string
+		OffsetInMilliSeconds int32 `json:"offsetInMilliSeconds,omitempty"` //Audio Player Event
+	}
+}
+
 // 打开请求
 type LaunchRequest struct {
 	RequestPart
