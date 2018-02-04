@@ -1,10 +1,10 @@
 package card
 
 type ListCardItem struct {
-	title   string `json:"title"`
-	content string `json:"content"`
-	image   string `json:"content"`
-	url     string `json:"url"`
+	Title   string `json:"title"`
+	Content string `json:"content"`
+	Image   string `json:"content"`
+	Url     string `json:"url"`
 }
 
 func NewListCardItem() *ListCardItem {
@@ -13,27 +13,27 @@ func NewListCardItem() *ListCardItem {
 }
 
 func (this *ListCardItem) SetTitle(title string) *ListCardItem {
-	this.title = title
+	this.Title = title
 	return this
 }
 
 func (this *ListCardItem) SetContent(content string) *ListCardItem {
-	this.content = content
+	this.Content = content
 	return this
 }
 
 func (this *ListCardItem) SetImage(image string) *ListCardItem {
-	this.image = image
+	this.Image = image
 	return this
 }
 
 func (this *ListCardItem) SetUrl(url string) *ListCardItem {
-	this.url = url
+	this.Url = url
 	return this
 }
 
 type ListCard struct {
-	list []*ListCardItem
+	List []*ListCardItem `json:"list"`
 	BaseCard
 }
 
@@ -44,6 +44,6 @@ func NewListCard() *ListCard {
 }
 
 func (this *ListCard) AddItem(item *ListCardItem) *ListCard {
-	this.list = append(this.list, item)
+	this.List = append(this.List, item)
 	return this
 }

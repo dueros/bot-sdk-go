@@ -2,7 +2,7 @@ package card
 
 type ImageCard struct {
 	BaseCard
-	list []map[string]string
+	List []map[string]string `json:"list"`
 }
 
 func NewImageCard() *ImageCard {
@@ -12,7 +12,7 @@ func NewImageCard() *ImageCard {
 }
 
 func (this *ImageCard) AddItem(src string, thumbnail string) *ImageCard {
-	this.list = append(this.list, map[string]string{
+	this.List = append(this.List, map[string]string{
 		"src":       src,
 		"thumbnail": thumbnail,
 	})

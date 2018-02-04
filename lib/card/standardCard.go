@@ -1,9 +1,9 @@
 package card
 
 type StandardCard struct {
-	title   string `json:"title"`
-	content string `json:"content"`
-	image   string `json:"image"`
+	Title   string `json:"title"`
+	Content string `json:"content"`
+	Image   string `json:"image"`
 	BaseCard
 }
 
@@ -13,17 +13,17 @@ func NewStandardCard() *StandardCard {
 	return card
 }
 
-func (this *StandardCard) setTitle(title string) *StandardCard {
-	this.title = title
+func (this *StandardCard) SetTitle(title string) *StandardCard {
+	this.Title = title
 	return this
 }
 
-func (this *StandardCard) setContent(content string) *StandardCard {
-	this.content = content
+func (this *StandardCard) SetContent(content string) *StandardCard {
+	this.Content = content
 	return this
 }
 
-func (this *StandardCard) setImage(image string) *StandardCard {
-	this.image = image
+func (this *StandardCard) SetImage(image string) *StandardCard {
+	this.Image = image
 	return this
 }
