@@ -10,14 +10,26 @@ type Bot struct {
 	launchRequestHandler       func(bot *Bot, request *req.LaunchRequest)
 	sessionEndedRequestHandler func(bot *Bot, request *req.SessionEndedRequest)
 	Request                    interface{}
+	Session                    *Session
+	Response                   *Response
 }
 
 func NewBot(rawRequest string) *Bot {
+	request := req.NewRequest(rawRequest)
+	session := getSession(request)
+
 	return &Bot{
 		intentHandler: make(map[string]func(bot *Bot, request *req.IntentRequest)),
 		eventHandler:  make(map[string]func(bot *Bot, request *req.EventRequest)),
-		Request:       req.NewRequest(rawRequest),
+		Request:       request,
+		Session:       session,
+		Response:      NewResponse(session, request),
 	}
+}
+
+func getSession(request interface{}) *Session {
+	r, _ := request.(req.Request)
+	return NewSession(r.GetSession())
 }
 
 func (this *Bot) AddIntentHandler(intentName string, fn func(bot *Bot, request *req.IntentRequest)) {
@@ -48,7 +60,7 @@ func (this *Bot) AskSlot(speech string, slot string) *Bot {
 func (this *Bot) Run() string {
 	this.dispatch()
 
-	return ""
+	return this.Response.Build()
 }
 
 func (this *Bot) dispatch() {

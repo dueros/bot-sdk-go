@@ -19,36 +19,42 @@ func NewIntent(intent data.Intent) *Intent {
 	}
 }
 
-func (this *Intent) GetSlot(name string) (*data.Slot, bool) {
+func (this *Intent) GetSlot(name string) *data.Slot {
 	slot, ok := this.data.Slots[name]
 	if ok {
-		return &slot, true
+		return &slot
 	}
-	return nil, false
+	return nil
 }
 
-func (this *Intent) GetSlotValue(name string) (string, bool) {
-	slot, ok := this.GetSlot(name)
-	if ok {
-		return slot.Value, true
+func (this *Intent) GetSlotValue(name string) string {
+	slot := this.GetSlot(name)
+	if slot != nil {
+		return slot.Value
 	}
-	return "", false
+	return ""
 }
 
-func (this *Intent) GetSlotStatus(name string) (string, bool) {
-	slot, ok := this.GetSlot(name)
-	if ok {
-		return slot.ConfirmationStatus, true
+func (this *Intent) GetSlotStatus(name string) string {
+	slot := this.GetSlot(name)
+	if slot != nil {
+		return slot.ConfirmationStatus
 	}
-	return "", false
+	return ""
 
 }
 
 func (this *Intent) SetSlotValue(name string, value string) bool {
-	slot, ok := this.GetSlot(name)
-	if ok {
+	slot := this.GetSlot(name)
+	if slot != nil {
 		slot.Value = value
 		return true
+	} else {
+		// TODO new a slot
 	}
 	return false
+}
+
+func (this *Intent) GetData() data.Intent {
+	return this.data
 }

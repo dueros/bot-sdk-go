@@ -35,7 +35,7 @@ func NewRequest(rawData string) interface{} {
 		if err := json.Unmarshal(jsonBlob, &request.Data); err != nil {
 			fmt.Println(err)
 		}
-		request.Nlu = nlu.NewDialog(request.Data.Request)
+		request.Dialog = nlu.NewDialog(request.Data.Request)
 		return request
 	} else if requestType == LAUNCH_REQUEST {
 		request := LaunchRequest{}
@@ -66,6 +66,10 @@ func NewRequest(rawData string) interface{} {
 	return false
 }
 
+func (this *Request) GetSession() data.Session {
+	return this.Common.Session
+}
+
 func (this *Request) GetUserId() string {
 	return this.Common.Context.System.User.UserId
 }
@@ -74,7 +78,9 @@ func (this *Request) GetDeviceId() string {
 	return this.Common.Context.System.Device.DeviceId
 }
 
-//func (this *Request) getAudioPlayerContext() AudioPlayerContext{}
+func (this *Request) getAudioPlayerContext() data.AudioPlayerContext {
+	return this.Common.Context.AudioPlayer
+}
 
 func (this *Request) GetAccessToken() string {
 	return this.Common.Context.System.User.AccessToken

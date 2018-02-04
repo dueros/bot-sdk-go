@@ -1,39 +1,50 @@
 package lib
 
 import (
-	"./card"
+	"./data"
 	"encoding/json"
 	"fmt"
+	"regexp"
 )
 
 type Response struct {
 	data map[string]interface{}
 }
 
-func NewResponse() *Response {
+func NewResponse(session *Session, request interface{}) *Response {
+	data := make(map[string]interface{})
 	return &Response{
-		data: make(map[string]interface{}),
+		data: data,
 	}
 }
 
 func (this *Response) Ask(speech string) *Response {
-
+	this.Tell(speech)
 	this.HoldOn()
 	return this
 }
 
 func (this *Response) Tell(speech string) *Response {
+	this.data["outputSpeech"] = this.formatSpeech(speech)
+	return this
+}
+
+func (this *Response) DisplayCard(card interface{}) *Response {
+	this.data["card"] = card
 
 	return this
 }
 
-func (this *Response) DisplayCard() *Response {
-	this.data["card"] = card.BaseCard{Type: "tct"}
+func (this *Response) Command(directive interface{}) *Response {
+	_, ok := this.data["directives"]
+	if !ok {
+		this.data["directives"] = make([]interface{}, 0)
+	}
 
-	return this
-}
+	directives, ok := this.data["directives"].([]interface{})
+	directives = append(directives, directive)
 
-func (this *Response) Command() *Response {
+	this.data["directives"] = directives
 
 	return this
 }
@@ -53,4 +64,20 @@ func (this *Response) Build() string {
 
 	fmt.Println(string(res2B))
 	return string(res2B)
+}
+
+func (this *Response) formatSpeech(speech string) data.Speech {
+	match, _ := regexp.MatchString("^<speak>", speech)
+
+	if match {
+		return data.Speech{
+			Type: "SSML",
+			Ssml: speech,
+		}
+	}
+
+	return data.Speech{
+		Type: "PlainText",
+		Text: speech,
+	}
 }

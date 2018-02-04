@@ -30,7 +30,14 @@ type Device struct {
 }
 
 type Context struct {
-	System System
+	System      System
+	AudioPlayer AudioPlayerContext
+}
+
+type AudioPlayerContext struct {
+	Token                string
+	OffsetInMilliSeconds int32
+	PlayerActivity       string
 }
 
 type baseRequest struct {
@@ -78,15 +85,15 @@ type Query struct {
 }
 
 type Slot struct {
-	Name               string
-	Value              string
-	ConfirmationStatus string
+	Name               string `json:"name"`
+	Value              string `json:"value"`
+	ConfirmationStatus string `json:"confirmationStatus"`
 }
 
 type Intent struct {
-	Name               string
-	Slots              map[string]Slot
-	ConfirmationStatus string
+	Name               string          `json:"name"`
+	Slots              map[string]Slot `json:"slots"`
+	ConfirmationStatus string          `json:"confirmationStatus"`
 }
 
 type IntentRequestBody struct {

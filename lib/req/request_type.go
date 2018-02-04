@@ -23,8 +23,8 @@ type Request struct {
 }
 
 type IntentRequest struct {
-	Data data.IntentRequest
-	Nlu  *nlu.Dialog
+	Data   data.IntentRequest
+	Dialog *nlu.Dialog
 	Request
 }
 
