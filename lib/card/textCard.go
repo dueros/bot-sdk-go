@@ -2,7 +2,7 @@ package card
 
 type TextCard struct {
 	BaseCard
-	content string `json:"content"`
+	Content string `json:"content"`
 }
 
 func NewTextCard(content string) *TextCard {
@@ -13,5 +13,5 @@ func NewTextCard(content string) *TextCard {
 }
 
 func (this *TextCard) SetContent(content string) {
-	this.content = content
+	this.Content = content
 }

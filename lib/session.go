@@ -9,6 +9,10 @@ type Session struct {
 }
 
 func NewSession(data data.Session) *Session {
+	if data.Attributes == nil {
+		data.Attributes = make(map[string]string)
+	}
+
 	return &Session{
 		data: data,
 	}

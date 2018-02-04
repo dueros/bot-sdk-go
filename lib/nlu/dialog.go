@@ -79,7 +79,7 @@ func (this *Dialog) GetSlotConfirmationStatus(name string, index ...int) string 
 	return ""
 }
 
-func (this *Dialog) getIntentConfirmationStatus(index ...int) string {
+func (this *Dialog) GetIntentConfirmationStatus(index ...int) string {
 	i := getIndex(index)
 	intent := this.getIntent(i)
 

@@ -1,5 +1,13 @@
 package data
 
+type SessionResponse struct {
+	Attributes map[string]string `json:"attributes"`
+}
+
+type ContextResponse struct {
+	Intent Intent `json:"intent"`
+}
+
 type DialogDirective struct {
 	Type          string `json:"type"`
 	SlotToElicit  string `json:"slotToElicit,omitempty"`
@@ -9,6 +17,6 @@ type DialogDirective struct {
 
 type Speech struct {
 	Type string `json:"type"`
-	Text string `json:"text"`
-	Ssml string `json:"ssml"`
+	Text string `json:"text,omitempty"`
+	Ssml string `json:"ssml,omitempty"`
 }

@@ -2,19 +2,23 @@ package lib
 
 import (
 	"./data"
+	"./req"
 	"encoding/json"
-	"fmt"
 	"regexp"
 )
 
 type Response struct {
-	data map[string]interface{}
+	session *Session
+	request interface{}
+	data    map[string]interface{}
 }
 
 func NewResponse(session *Session, request interface{}) *Response {
 	data := make(map[string]interface{})
 	return &Response{
-		data: data,
+		data:    data,
+		session: session,
+		request: request,
 	}
 }
 
@@ -55,15 +59,29 @@ func (this *Response) HoldOn() *Response {
 }
 
 func (this *Response) Build() string {
+	//session
+	attributes := this.session.GetData().Attributes
+
 	ret := map[string]interface{}{
 		"version":  "2.0",
+		"session":  data.SessionResponse{Attributes: attributes},
 		"response": this.data,
 	}
 
-	res2B, _ := json.Marshal(ret)
+	//intent request
+	request, ok := this.request.(req.IntentRequest)
+	if ok {
+		ret["context"] = data.ContextResponse{Intent: request.Dialog.Intents[0].GetData()}
 
-	fmt.Println(string(res2B))
-	return string(res2B)
+		directive := request.Dialog.GetDirective()
+		if directive != nil {
+			this.Command(directive)
+		}
+	}
+
+	response, _ := json.Marshal(ret)
+
+	return string(response)
 }
 
 func (this *Response) formatSpeech(speech string) data.Speech {
