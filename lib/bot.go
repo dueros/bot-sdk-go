@@ -1,7 +1,7 @@
 package lib
 
 import (
-	"./req"
+	"github.com/dueros/bot-sdk-go/lib/req"
 )
 
 type Bot struct {

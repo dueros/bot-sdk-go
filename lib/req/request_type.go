@@ -1,8 +1,8 @@
 package req
 
 import (
-	"../data"
-	"../nlu"
+	"github.com/dueros/bot-sdk-go/lib/data"
+	"github.com/dueros/bot-sdk-go/lib/nlu"
 )
 
 const (

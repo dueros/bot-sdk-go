@@ -1,7 +1,7 @@
 package audio
 
 import (
-	"../../directive"
+	"github.com/dueros/bot-sdk-go/lib/directive"
 )
 
 type PlayDirective struct {

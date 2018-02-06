@@ -1,9 +1,9 @@
 package lib
 
 import (
-	"./data"
-	"./req"
 	"encoding/json"
+	"github.com/dueros/bot-sdk-go/lib/data"
+	"github.com/dueros/bot-sdk-go/lib/req"
 	"regexp"
 )
 

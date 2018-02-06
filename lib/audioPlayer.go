@@ -1,7 +1,7 @@
 package lib
 
 import (
-	"./req"
+	"github.com/dueros/bot-sdk-go/lib/req"
 )
 
 func (this *Bot) OnPlaybackStarted(fn func(bot *Bot, request *req.EventRequest)) {

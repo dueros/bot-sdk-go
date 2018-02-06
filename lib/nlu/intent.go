@@ -1,7 +1,7 @@
 package nlu
 
 import (
-	"../data"
+	"github.com/dueros/bot-sdk-go/lib/data"
 )
 
 type Intent struct {

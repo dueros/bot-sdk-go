@@ -1,10 +1,10 @@
 package req
 
 import (
-	"../data"
-	"../nlu"
 	"encoding/json"
 	"fmt"
+	"github.com/dueros/bot-sdk-go/lib/data"
+	"github.com/dueros/bot-sdk-go/lib/nlu"
 )
 
 func getType(rawData string) string {
