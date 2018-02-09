@@ -18,14 +18,17 @@ func NewSession(data data.Session) *Session {
 	}
 }
 
+// 当前session是否是新的
 func (this *Session) IsNew() bool {
 	return this.data.New
 }
 
+// 获取session id
 func (this *Session) GetId() string {
 	return this.data.SessionId
 }
 
+// 获取session中对应字段的值
 func (this *Session) GetAttribute(key string) string {
 	value, ok := this.data.Attributes[key]
 	if ok {
@@ -34,6 +37,7 @@ func (this *Session) GetAttribute(key string) string {
 	return ""
 }
 
+// 设置session中对应字段的值
 func (this *Session) SetAttribute(key, value string) {
 	if key == "" {
 		return

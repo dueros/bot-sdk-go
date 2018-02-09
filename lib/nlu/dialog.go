@@ -41,6 +41,7 @@ func getIndex(index []int) int {
 	return i
 }
 
+// 获取用户请求的原始query
 func (this *Dialog) GetQuery() (string, bool) {
 	if this.data.Query.Type == "TEXT" {
 		return this.data.Query.Original, true
@@ -48,6 +49,7 @@ func (this *Dialog) GetQuery() (string, bool) {
 	return "", false
 }
 
+// 获取当前意图的名字
 func (this *Dialog) GetIntentName() (string, bool) {
 	intent := this.getIntent(0)
 	if intent != nil {
@@ -56,6 +58,7 @@ func (this *Dialog) GetIntentName() (string, bool) {
 	return "", false
 }
 
+// 获取槽位的值，默认取第一组槽位
 func (this *Dialog) GetSlotValue(name string, index ...int) string {
 	// 默认取第一个intent
 	// 如果有第二个参数，取参数指定index
@@ -69,6 +72,7 @@ func (this *Dialog) GetSlotValue(name string, index ...int) string {
 	return ""
 }
 
+// 获取槽位的确认状态，默认取第一组槽位
 func (this *Dialog) GetSlotConfirmationStatus(name string, index ...int) string {
 	i := getIndex(index)
 	intent := this.getIntent(i)
@@ -79,6 +83,7 @@ func (this *Dialog) GetSlotConfirmationStatus(name string, index ...int) string 
 	return ""
 }
 
+// 获取意图的确认状态
 func (this *Dialog) GetIntentConfirmationStatus(index ...int) string {
 	i := getIndex(index)
 	intent := this.getIntent(i)
@@ -89,6 +94,7 @@ func (this *Dialog) GetIntentConfirmationStatus(index ...int) string {
 	return ""
 }
 
+// 托管对话. 对话由DuerOS代为处理
 func (this *Dialog) Delegate() *Dialog {
 	this.directive = &data.DialogDirective{
 		Type:          "Dialog.Delegate",
