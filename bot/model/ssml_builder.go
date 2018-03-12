@@ -1,4 +1,4 @@
-package lib
+package model
 
 import (
 	"bytes"
@@ -29,7 +29,7 @@ func (builder *SSMLTextBuilder) AppendPlainSpeech(text string) *SSMLTextBuilder 
 
 func (builder *SSMLTextBuilder) AppendAudio(src string) *SSMLTextBuilder {
 
-	builder.buffer.WriteString(fmt.Sprintf("<audio src=\"%s\"/>", src))
+	builder.buffer.WriteString(fmt.Sprintf("<audio_player src=\"%s\"/>", src))
 
 	return builder
 }

@@ -1,10 +1,10 @@
-package lib
+package model
 
 import (
 	"encoding/json"
-	"github.com/dueros/bot-sdk-go/lib/data"
-	"github.com/dueros/bot-sdk-go/lib/req"
 	"regexp"
+
+	"github.com/dueros/bot-sdk-go/bot/data"
 )
 
 type Response struct {
@@ -14,9 +14,9 @@ type Response struct {
 }
 
 func NewResponse(session *Session, request interface{}) *Response {
-	data := make(map[string]interface{})
+	d := make(map[string]interface{})
 	return &Response{
-		data:    data,
+		data:    d,
 		session: session,
 		request: request,
 	}
@@ -94,7 +94,7 @@ func (this *Response) Build() string {
 	}
 
 	//intent request
-	request, ok := this.request.(req.IntentRequest)
+	request, ok := this.request.(IntentRequest)
 	if ok {
 		ret["context"] = data.ContextResponse{Intent: request.Dialog.Intents[0].GetData()}
 

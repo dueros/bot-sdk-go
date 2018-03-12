@@ -1,7 +1,7 @@
-package lib
+package model
 
 import (
-	"github.com/dueros/bot-sdk-go/lib/data"
+	"github.com/dueros/bot-sdk-go/bot/data"
 )
 
 type Session struct {

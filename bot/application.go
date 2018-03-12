@@ -1,7 +1,6 @@
-package lib
+package bot
 
 import (
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -15,14 +14,14 @@ type Application struct {
 
 func (this *Application) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if !this.Verify(r) {
-		fmt.Fprintf(w, "非法")
+		w.WriteHeader(403) // TODO
+		return
 	}
 
-	//fmt.Println(r.Method)
+	defer r.Body.Close()
 	body, _ := ioutil.ReadAll(r.Body)
-	//fmt.Println(string(body))
 	ret := this.Handler(string(body))
-	fmt.Fprintf(w, ret)
+	w.Write([]byte(ret))
 }
 
 func (this *Application) Start(host string) {
@@ -34,5 +33,5 @@ func (this *Application) Start(host string) {
 }
 
 func (this *Application) Verify(r *http.Request) bool {
-	return false
+	return true
 }
