@@ -34,6 +34,16 @@ func (this *Response) Ask(speech string) *Response {
 	return this
 }
 
+func (this *Response) AskSlot(speech string, slot string) *Response {
+	this.Ask(speech)
+
+	request, ok := this.request.(IntentRequest)
+	if ok {
+		request.Dialog.ElicitSlot(slot)
+	}
+	return this
+}
+
 /**
  * @desc 回复用户，返回的speech
  */

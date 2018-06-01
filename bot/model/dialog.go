@@ -127,15 +127,15 @@ func (this *Dialog) ConfirmIntent() *Dialog {
 
 func (this *Dialog) ElicitSlot(name string) *Dialog {
 	intent := this.getIntent(0)
-	slot := intent.GetSlot(name)
+	//slot := intent.GetSlot(name)
 
-	if slot != nil {
-		this.directive = &data.DialogDirective{
-			Type:          "Dialog.ElicitSlot",
-			SlotToElicit:  name,
-			UpdatedIntent: intent.GetData(),
-		}
+	//if slot != nil {
+	this.directive = &data.DialogDirective{
+		Type:          "Dialog.ElicitSlot",
+		SlotToElicit:  name,
+		UpdatedIntent: intent.GetData(),
 	}
+	//}
 	return this
 }
 

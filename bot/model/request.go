@@ -2,9 +2,9 @@ package model
 
 import (
 	"encoding/json"
-	"log"
-
 	"github.com/dueros/bot-sdk-go/bot/data"
+	"log"
+	"time"
 )
 
 const (
@@ -58,10 +58,6 @@ func (this *IntentRequest) GetQuery() string {
 	return query
 }
 
-func (this *Request) GetSession() data.Session {
-	return this.Common.Session
-}
-
 func (this *Request) GetUserId() string {
 	return this.Common.Context.System.User.UserId
 }
@@ -90,6 +86,22 @@ func (this *Request) GetBotId() string {
 	return this.Common.Context.System.Application.ApplicationId
 }
 
+func (this *Request) VerifyTimestamp() bool {
+	reqTimestamp, _ := time.Parse("2006-01-02T15:04:05Z", this.GetTimestamp())
+
+	if time.Since(reqTimestamp) < time.Duration(180)*time.Second {
+		return true
+	}
+	return false
+}
+
+func (this *Request) VerifyBotID(myBotID string) bool {
+	if this.GetBotId() == myBotID {
+		return true
+	}
+	return false
+}
+
 func getType(rawData string) string {
 	jsonBlob := []byte(rawData)
 	d := data.LaunchRequest{}
@@ -99,6 +111,16 @@ func getType(rawData string) string {
 	}
 
 	return d.Request.Type
+}
+
+func GetSessionData(rawData string) data.Session {
+	jsonBlob := []byte(rawData)
+	common := data.RequestPart{}
+	if err := json.Unmarshal(jsonBlob, &common); err != nil {
+		log.Println(err)
+	}
+
+	return common.Session
 }
 
 func NewRequest(rawData string) interface{} {
@@ -121,6 +143,7 @@ func NewRequest(rawData string) interface{} {
 			return false
 		}
 		request.Dialog = NewDialog(request.Data.Request)
+
 		return request
 	} else if requestType == LAUNCH_REQUEST {
 		request := LaunchRequest{}
