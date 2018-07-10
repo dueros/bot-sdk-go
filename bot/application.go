@@ -31,11 +31,17 @@ type Application struct {
 func (this *Application) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	defer r.Body.Close()
+	//心跳请求
+	if r.Method == "HEAD" {
+		// 返回204
+		w.WriteHeader(http.StatusNoContent)
+		return
+	}
 
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		log.Fatal(err)
-		HTTPError(w, "request read failed", "Server Error", 500)
+		HTTPError(w, "request read failed", "Server Error", http.StatusInternalServerError)
 		return
 	}
 
@@ -83,19 +89,19 @@ func verifyJSON(w http.ResponseWriter, r *http.Request, appId string) bool {
 	body := r.Context().Value("requestBody").([]byte)
 
 	if err := json.Unmarshal(body, &req); err != nil {
-		HTTPError(w, err.Error(), "Bad Request", 400)
+		HTTPError(w, err.Error(), "Bad Request", http.StatusBadRequest)
 		return false
 	}
 
 	// Check the timestamp
 	if !req.VerifyTimestamp() && r.URL.Query().Get("_dev") == "" {
-		HTTPError(w, "Request too old to continue (>180s).", "Bad Request", 400)
+		HTTPError(w, "Request too old to continue (>180s).", "Bad Request", http.StatusBadRequest)
 		return false
 	}
 
 	// Check the app id
 	if !req.VerifyBotID(appId) {
-		HTTPError(w, "DuerOS BotID mismatch!", "Bad Request", 400)
+		HTTPError(w, "DuerOS BotID mismatch!", "Bad Request", http.StatusBadRequest)
 		return false
 	}
 	return true
@@ -126,33 +132,33 @@ func IsValidRequest(w http.ResponseWriter, r *http.Request) bool {
 
 	// Verify certificate URL
 	if !verifyCertURL(certURL) {
-		HTTPError(w, "Invalid cert URL: "+certURL, "Not Authorized", 401)
+		HTTPError(w, "Invalid cert URL: "+certURL, "Not Authorized", http.StatusUnauthorized)
 		return false
 	}
 
 	// Fetch certificate data
 	certContents, err := readCert(certURL)
 	if err != nil {
-		HTTPError(w, err.Error(), "Not Authorized", 401)
+		HTTPError(w, err.Error(), "Not Authorized", http.StatusUnauthorized)
 		return false
 	}
 
 	// Decode certificate data
 	block, _ := pem.Decode(certContents)
 	if block == nil {
-		HTTPError(w, "Failed to parse certificate PEM.", "Not Authorized", 401)
+		HTTPError(w, "Failed to parse certificate PEM.", "Not Authorized", http.StatusUnauthorized)
 		return false
 	}
 
 	cert, err := x509.ParseCertificate(block.Bytes)
 	if err != nil {
-		HTTPError(w, err.Error(), "Not Authorized", 401)
+		HTTPError(w, err.Error(), "Not Authorized", http.StatusUnauthorized)
 		return false
 	}
 
 	// Check the certificate date
 	if time.Now().Unix() < cert.NotBefore.Unix() || time.Now().Unix() > cert.NotAfter.Unix() {
-		HTTPError(w, "DuerOS certificate expired.", "Not Authorized", 401)
+		HTTPError(w, "DuerOS certificate expired.", "Not Authorized", http.StatusUnauthorized)
 		return false
 	}
 
@@ -165,7 +171,7 @@ func IsValidRequest(w http.ResponseWriter, r *http.Request) bool {
 	}
 
 	if !foundName {
-		HTTPError(w, "DuerOS certificate invalid.", "Not Authorized", 401)
+		HTTPError(w, "DuerOS certificate invalid.", "Not Authorized", http.StatusUnauthorized)
 		return false
 	}
 
@@ -178,13 +184,13 @@ func IsValidRequest(w http.ResponseWriter, r *http.Request) bool {
 	hash := sha1.New()
 	_, err = io.Copy(hash, bytes.NewReader(r.Context().Value("requestBody").([]byte)))
 	if err != nil {
-		HTTPError(w, err.Error(), "Internal Error", 500)
+		HTTPError(w, err.Error(), "Internal Error", http.StatusInternalServerError)
 		return false
 	}
 
 	err = rsa.VerifyPKCS1v15(publicKey.(*rsa.PublicKey), crypto.SHA1, hash.Sum(nil), encryptedSig)
 	if err != nil {
-		HTTPError(w, "Signature match failed.", "Not Authorized", 401)
+		HTTPError(w, "Signature match failed.", "Not Authorized", http.StatusUnauthorized)
 		return false
 	}
 
