@@ -11,13 +11,14 @@ import (
 	"encoding/json"
 	"encoding/pem"
 	"errors"
-	"github.com/dueros/bot-sdk-go/bot/model"
 	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"net/url"
 	"time"
+
+	"github.com/dueros/bot-sdk-go/bot/model"
 )
 
 type Application struct {
@@ -31,7 +32,13 @@ func (this *Application) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	defer r.Body.Close()
 
-	body, _ := ioutil.ReadAll(r.Body)
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		log.Fatal(err)
+		HTTPError(w, "request read failed", "Server Error", 500)
+		return
+	}
+
 	r = r.WithContext(context.WithValue(r.Context(), "requestBody", body))
 
 	if !this.Verify(w, r) {
