@@ -32,7 +32,7 @@
 
 
 
-## <a name="Response">type</a> [Response](/src/target/response.go?s=96:191#L10)
+## <a name="Response">type</a> [Response](/src/target/response.go?s=127:222#L10)
 ``` go
 type Response struct {
     // contains filtered or unexported fields
@@ -44,7 +44,7 @@ type Response struct {
 
 
 
-### <a name="NewResponse">func</a> [NewResponse](/src/target/response.go?s=193:258#L16)
+### <a name="NewResponse">func</a> [NewResponse](/src/target/response.go?s=224:289#L16)
 ``` go
 func NewResponse(session *Session, request interface{}) *Response
 ```
@@ -52,7 +52,7 @@ func NewResponse(session *Session, request interface{}) *Response
 
 
 
-### <a name="Response.Ask">func</a> (\*Response) [Ask](/src/target/response.go?s=620:670#L31)
+### <a name="Response.Ask">func</a> (\*Response) [Ask](/src/target/response.go?s=651:701#L31)
 ``` go
 func (this *Response) Ask(speech string) *Response
 ```
@@ -67,21 +67,21 @@ func (this *Response) Ask(speech string) *Response
 
 
 
-### <a name="Response.AskSlot">func</a> (\*Response) [AskSlot](/src/target/response.go?s=723:790#L37)
+### <a name="Response.AskSlot">func</a> (\*Response) [AskSlot](/src/target/response.go?s=754:821#L37)
 ``` go
 func (this *Response) AskSlot(speech string, slot string) *Response
 ```
 
 
 
-### <a name="Response.Build">func</a> (\*Response) [Build](/src/target/response.go?s=2453:2489#L116)
+### <a name="Response.Build">func</a> (\*Response) [Build](/src/target/response.go?s=2484:2520#L116)
 ``` go
 func (this *Response) Build() string
 ```
 
 
 
-### <a name="Response.CloseMicrophone">func</a> (\*Response) [CloseMicrophone](/src/target/response.go?s=2351:2400#L111)
+### <a name="Response.CloseMicrophone">func</a> (\*Response) [CloseMicrophone](/src/target/response.go?s=2382:2431#L111)
 ``` go
 func (this *Response) CloseMicrophone() *Response
 ```
@@ -95,7 +95,7 @@ func (this *Response) CloseMicrophone() *Response
 
 
 
-### <a name="Response.Command">func</a> (\*Response) [Command](/src/target/response.go?s=1782:1844#L82)
+### <a name="Response.Command">func</a> (\*Response) [Command](/src/target/response.go?s=1813:1875#L82)
 ``` go
 func (this *Response) Command(directive interface{}) *Response
 ```
@@ -109,7 +109,7 @@ func (this *Response) Command(directive interface{}) *Response
 
 
 
-### <a name="Response.DisplayCard">func</a> (\*Response) [DisplayCard](/src/target/response.go?s=1471:1532#L71)
+### <a name="Response.DisplayCard">func</a> (\*Response) [DisplayCard](/src/target/response.go?s=1502:1563#L71)
 ``` go
 func (this *Response) DisplayCard(card interface{}) *Response
 ```
@@ -124,7 +124,7 @@ func (this *Response) DisplayCard(card interface{}) *Response
 
 
 
-### <a name="Response.HoldOn">func</a> (\*Response) [HoldOn](/src/target/response.go?s=2200:2240#L101)
+### <a name="Response.HoldOn">func</a> (\*Response) [HoldOn](/src/target/response.go?s=2231:2271#L101)
 ``` go
 func (this *Response) HoldOn() *Response
 ```
@@ -138,7 +138,7 @@ func (this *Response) HoldOn() *Response
 
 
 
-### <a name="Response.Reprompt">func</a> (\*Response) [Reprompt](/src/target/response.go?s=1140:1195#L58)
+### <a name="Response.Reprompt">func</a> (\*Response) [Reprompt](/src/target/response.go?s=1171:1226#L58)
 ``` go
 func (this *Response) Reprompt(speech string) *Response
 ```
@@ -150,7 +150,7 @@ func (this *Response) Reprompt(speech string) *Response
 
 
 
-### <a name="Response.Tell">func</a> (\*Response) [Tell](/src/target/response.go?s=967:1018#L50)
+### <a name="Response.Tell">func</a> (\*Response) [Tell](/src/target/response.go?s=998:1049#L50)
 ``` go
 func (this *Response) Tell(speech string) *Response
 ```

@@ -147,7 +147,7 @@ func (this *Dialog) GetSlotValue(name string, index ...int) string
 
 
 
-## <a name="IntentRequest">type</a> [IntentRequest](/src/target/request.go?s=1233:1314#L34)
+## <a name="IntentRequest">type</a> [IntentRequest](/src/target/request.go?s=1244:1325#L35)
 ``` go
 type IntentRequest struct {
     Data   data.IntentRequest
@@ -164,7 +164,7 @@ type IntentRequest struct {
 
 
 
-### <a name="IntentRequest.GetIntentName">func</a> (\*IntentRequest) [GetIntentName](/src/target/request.go?s=1540:1597#L56)
+### <a name="IntentRequest.GetIntentName">func</a> (\*IntentRequest) [GetIntentName](/src/target/request.go?s=1551:1608#L57)
 ``` go
 func (this *IntentRequest) GetIntentName() (string, bool)
 ```
@@ -173,7 +173,7 @@ func (this *IntentRequest) GetIntentName() (string, bool)
 
 
 
-### <a name="IntentRequest.GetQuery">func</a> (\*IntentRequest) [GetQuery](/src/target/request.go?s=1769:1813#L66)
+### <a name="IntentRequest.GetQuery">func</a> (\*IntentRequest) [GetQuery](/src/target/request.go?s=1780:1824#L67)
 ``` go
 func (this *IntentRequest) GetQuery() string
 ```
@@ -182,7 +182,7 @@ func (this *IntentRequest) GetQuery() string
 
 
 
-### <a name="IntentRequest.IsDialogStateCompleted">func</a> (\*IntentRequest) [IsDialogStateCompleted](/src/target/request.go?s=1667:1723#L61)
+### <a name="IntentRequest.IsDialogStateCompleted">func</a> (\*IntentRequest) [IsDialogStateCompleted](/src/target/request.go?s=1678:1734#L62)
 ``` go
 func (this *IntentRequest) IsDialogStateCompleted() bool
 ```
