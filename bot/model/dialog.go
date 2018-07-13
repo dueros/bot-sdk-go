@@ -103,6 +103,7 @@ func (this *Dialog) Delegate() *Dialog {
 	return this
 }
 
+// 对槽位进行confirm
 func (this *Dialog) ConfirmSlot(name string) *Dialog {
 	intent := this.getIntent(0)
 	slot := intent.GetSlot(name)
@@ -117,6 +118,7 @@ func (this *Dialog) ConfirmSlot(name string) *Dialog {
 	return this
 }
 
+// 对意图进行确认
 func (this *Dialog) ConfirmIntent() *Dialog {
 	this.directive = &data.DialogDirective{
 		Type:          "Dialog.ConfirmIntent",
@@ -125,6 +127,7 @@ func (this *Dialog) ConfirmIntent() *Dialog {
 	return this
 }
 
+// 询问槽位
 func (this *Dialog) ElicitSlot(name string) *Dialog {
 	intent := this.getIntent(0)
 	//slot := intent.GetSlot(name)

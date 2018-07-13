@@ -2,9 +2,9 @@ package model
 
 import (
 	"encoding/json"
-	"regexp"
 
 	"github.com/dueros/bot-sdk-go/bot/data"
+	"github.com/dueros/bot-sdk-go/bot/util"
 )
 
 type Response struct {
@@ -48,7 +48,17 @@ func (this *Response) AskSlot(speech string, slot string) *Response {
  * @desc 回复用户，返回的speech
  */
 func (this *Response) Tell(speech string) *Response {
-	this.data["outputSpeech"] = this.formatSpeech(speech)
+	this.data["outputSpeech"] = util.FormatSpeech(speech)
+	return this
+}
+
+/**
+ * @desc 回复用户，返回的speech
+ */
+func (this *Response) Reprompt(speech string) *Response {
+	this.data["reprompt"] = map[string]interface{}{
+		"outputSpeech": util.FormatSpeech(speech),
+	}
 	return this
 }
 
@@ -93,6 +103,16 @@ func (this *Response) HoldOn() *Response {
 	return this
 }
 
+/**
+ * @desc 保持会话.
+ *
+ * 关闭麦克风
+ */
+func (this *Response) CloseMicrophone() *Response {
+	this.data["expectSpeech"] = true
+	return this
+}
+
 func (this *Response) Build() string {
 	//session
 	attributes := this.session.GetData().Attributes
@@ -117,20 +137,4 @@ func (this *Response) Build() string {
 	response, _ := json.Marshal(ret)
 
 	return string(response)
-}
-
-func (this *Response) formatSpeech(speech string) data.Speech {
-	match, _ := regexp.MatchString("^<speak>", speech)
-
-	if match {
-		return data.Speech{
-			Type: "SSML",
-			Ssml: speech,
-		}
-	}
-
-	return data.Speech{
-		Type: "PlainText",
-		Text: speech,
-	}
 }

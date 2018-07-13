@@ -18,6 +18,7 @@ import (
 	"net/url"
 	"time"
 
+	"github.com/dueros/bot-sdk-go/bot/data"
 	"github.com/dueros/bot-sdk-go/bot/model"
 )
 
@@ -28,6 +29,7 @@ type Application struct {
 	Handler            func(rawRequest string) string
 }
 
+// 创建一个HTTP服务
 func (this *Application) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 
 	defer r.Body.Close()
@@ -55,6 +57,7 @@ func (this *Application) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(ret))
 }
 
+// 启动HTTP服务
 func (this *Application) Start(host string) {
 	err := http.ListenAndServe(host, this)
 
@@ -63,6 +66,7 @@ func (this *Application) Start(host string) {
 	}
 }
 
+// 验证请求是否合法
 func (this *Application) Verify(w http.ResponseWriter, r *http.Request) bool {
 	if !this.DisableVerifyJson && !verifyJSON(w, r, this.AppId) {
 		return false
@@ -84,14 +88,17 @@ func HTTPError(w http.ResponseWriter, logMsg string, err string, errCode int) {
 
 // Decode the JSON request and verify it.
 func verifyJSON(w http.ResponseWriter, r *http.Request, appId string) bool {
-	var req *model.Request
+	req := model.Request{}
+	dataPart := data.RequestPart{}
 
 	body := r.Context().Value("requestBody").([]byte)
 
-	if err := json.Unmarshal(body, &req); err != nil {
+	if err := json.Unmarshal(body, &dataPart); err != nil {
 		HTTPError(w, err.Error(), "Bad Request", http.StatusBadRequest)
 		return false
 	}
+
+	req.Common = dataPart
 
 	// Check the timestamp
 	if !req.VerifyTimestamp() && r.URL.Query().Get("_dev") == "" {

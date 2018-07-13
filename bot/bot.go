@@ -4,7 +4,7 @@ import (
 	"github.com/dueros/bot-sdk-go/bot/model"
 )
 
-// 技能
+// 技能基础类
 type Bot struct {
 	intentHandler              map[string]func(bot *Bot, request *model.IntentRequest) // 针对intent requset不同intent的处理函数
 	eventHandler               map[string]func(bot *Bot, request *model.EventRequest)  // 针对事件的处理函数
@@ -43,6 +43,8 @@ func (this *Bot) AddEventListener(eventName string, fn func(bot *Bot, request *m
 	}
 }
 
+// 添加事件默认处理函数
+// 比如，在播放视频时，技能会收到各种事件的上报，如果不想一一处理可以使用这个来添加处理
 func (this *Bot) AddDefaultEventListener(fn func(bot *Bot, request *model.EventRequest)) {
 	this.defaultEventHandler = fn
 }
