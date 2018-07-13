@@ -89,16 +89,13 @@ func HTTPError(w http.ResponseWriter, logMsg string, err string, errCode int) {
 // Decode the JSON request and verify it.
 func verifyJSON(w http.ResponseWriter, r *http.Request, appId string) bool {
 	req := model.Request{}
-	dataPart := data.RequestPart{}
 
 	body := r.Context().Value("requestBody").([]byte)
 
-	if err := json.Unmarshal(body, &dataPart); err != nil {
+	if err := json.Unmarshal(body, &req.Common); err != nil {
 		HTTPError(w, err.Error(), "Bad Request", http.StatusBadRequest)
 		return false
 	}
-
-	req.Common = dataPart
 
 	// Check the timestamp
 	if !req.VerifyTimestamp() && r.URL.Query().Get("_dev") == "" {
