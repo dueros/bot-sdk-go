@@ -19,6 +19,7 @@
   * [func (this *Response) CloseMicrophone() *Response](#Response.CloseMicrophone)
   * [func (this *Response) Command(directive interface{}) *Response](#Response.Command)
   * [func (this *Response) DisplayCard(card interface{}) *Response](#Response.DisplayCard)
+  * [func (this *Response) GetData() map[string]interface{}](#Response.GetData)
   * [func (this *Response) HoldOn() *Response](#Response.HoldOn)
   * [func (this *Response) Reprompt(speech string) *Response](#Response.Reprompt)
   * [func (this *Response) Tell(speech string) *Response](#Response.Tell)
@@ -52,112 +53,114 @@ func NewResponse(session *Session, request interface{}) *Response
 
 
 
-### <a name="Response.Ask">func</a> (\*Response) [Ask](/src/target/response.go?s=651:701#L31)
+### <a name="Response.Ask">func</a> (\*Response) [Ask](/src/target/response.go?s=642:692#L30)
 ``` go
 func (this *Response) Ask(speech string) *Response
 ```
 *
 
 
-	* @desc 询问用户时，返回的speech.
-	*
+	* 询问用户时，返回的speech.
 	* 此时设备的麦克风会进入收音状态，比如设备灯光亮起
 	* TIP: 一般技能要完成一项任务，还缺少一些信息，主动发起对用户的询问的时候使用
 
 
 
 
-### <a name="Response.AskSlot">func</a> (\*Response) [AskSlot](/src/target/response.go?s=754:821#L37)
+### <a name="Response.AskSlot">func</a> (\*Response) [AskSlot](/src/target/response.go?s=745:812#L36)
 ``` go
 func (this *Response) AskSlot(speech string, slot string) *Response
 ```
 
 
 
-### <a name="Response.Build">func</a> (\*Response) [Build](/src/target/response.go?s=2484:2520#L116)
+### <a name="Response.Build">func</a> (\*Response) [Build](/src/target/response.go?s=2427:2463#L111)
 ``` go
 func (this *Response) Build() string
 ```
 
 
 
-### <a name="Response.CloseMicrophone">func</a> (\*Response) [CloseMicrophone](/src/target/response.go?s=2382:2431#L111)
+### <a name="Response.CloseMicrophone">func</a> (\*Response) [CloseMicrophone](/src/target/response.go?s=2325:2374#L106)
 ``` go
 func (this *Response) CloseMicrophone() *Response
 ```
 *
 
 
-	* @desc 保持会话.
-	*
+	* 保持会话.
 	* 关闭麦克风
 
 
 
 
-### <a name="Response.Command">func</a> (\*Response) [Command](/src/target/response.go?s=1813:1875#L82)
+### <a name="Response.Command">func</a> (\*Response) [Command](/src/target/response.go?s=1774:1836#L79)
 ``` go
 func (this *Response) Command(directive interface{}) *Response
 ```
 *
 
 
-	* @desc 返回指令. 比如，返回音频播放指令，使设备开始播放音频
-	*
+	* 返回指令. 比如，返回音频播放指令，使设备开始播放音频
 	* TIP: 可以同时返回多个指令，设备按返回顺序执行这些指令，指令协议参考TODO
 
 
 
 
-### <a name="Response.DisplayCard">func</a> (\*Response) [DisplayCard](/src/target/response.go?s=1502:1563#L71)
+### <a name="Response.DisplayCard">func</a> (\*Response) [DisplayCard](/src/target/response.go?s=1472:1533#L69)
 ``` go
 func (this *Response) DisplayCard(card interface{}) *Response
 ```
 *
 
 
-	* @desc 返回卡片.
-	*
+	* 返回卡片.
 	* 针对有屏幕的设备，比如: 电视、show，可以呈现更多丰富的信息给用户
 	* 卡片协议参考：TODO
 
 
 
 
-### <a name="Response.HoldOn">func</a> (\*Response) [HoldOn](/src/target/response.go?s=2231:2271#L101)
+### <a name="Response.GetData">func</a> (\*Response) [GetData](/src/target/response.go?s=2994:3048#L137)
+``` go
+func (this *Response) GetData() map[string]interface{}
+```
+
+
+
+### <a name="Response.HoldOn">func</a> (\*Response) [HoldOn](/src/target/response.go?s=2183:2223#L97)
 ``` go
 func (this *Response) HoldOn() *Response
 ```
 *
 
 
-	* @desc 保持会话.
-	*
+	* 保持会话.
 	* 此时设备的麦克风会自动开启监听用户说话
 
 
 
 
-### <a name="Response.Reprompt">func</a> (\*Response) [Reprompt](/src/target/response.go?s=1171:1226#L58)
+### <a name="Response.Reprompt">func</a> (\*Response) [Reprompt](/src/target/response.go?s=1150:1205#L57)
 ``` go
 func (this *Response) Reprompt(speech string) *Response
 ```
 *
 
 
-	* @desc 回复用户，返回的speech
+	* 回复用户，返回的speech
 
 
 
 
-### <a name="Response.Tell">func</a> (\*Response) [Tell](/src/target/response.go?s=998:1049#L50)
+### <a name="Response.Tell">func</a> (\*Response) [Tell](/src/target/response.go?s=983:1034#L49)
 ``` go
 func (this *Response) Tell(speech string) *Response
 ```
 *
 
 
-	* @desc 回复用户，返回的speech
+	* 回复用户，返回的speech
 
 
 

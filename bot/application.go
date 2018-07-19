@@ -18,7 +18,6 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/dueros/bot-sdk-go/bot/data"
 	"github.com/dueros/bot-sdk-go/bot/model"
 )
 

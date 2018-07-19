@@ -19,14 +19,14 @@
 
 
 #### <a name="pkg-files">Package files</a>
-[application.go](/src/github.com/dueros/bot-sdk-go/bot/application.go) [bot.go](/src/github.com/dueros/bot-sdk-go/bot/bot.go) 
+[application.go](/src/github.com/dueros/bot-sdk-go/bot/application.go) [audio_player.go](/src/github.com/dueros/bot-sdk-go/bot/audio_player.go) [bot.go](/src/github.com/dueros/bot-sdk-go/bot/bot.go) [event_handler.go](/src/github.com/dueros/bot-sdk-go/bot/event_handler.go) [video_player.go](/src/github.com/dueros/bot-sdk-go/bot/video_player.go) 
 
 
 
 
 
 
-## <a name="Application">type</a> [Application](/src/target/application.go?s=302:457#L25)
+## <a name="Application">type</a> [Application](/src/target/application.go?s=261:416#L24)
 ``` go
 type Application struct {
     AppId              string
@@ -44,7 +44,7 @@ type Application struct {
 
 
 
-### <a name="Application.ServeHTTP">func</a> (\*Application) [ServeHTTP](/src/target/application.go?s=485:559#L33)
+### <a name="Application.ServeHTTP">func</a> (\*Application) [ServeHTTP](/src/target/application.go?s=444:518#L32)
 ``` go
 func (this *Application) ServeHTTP(w http.ResponseWriter, r *http.Request)
 ```
@@ -53,7 +53,7 @@ func (this *Application) ServeHTTP(w http.ResponseWriter, r *http.Request)
 
 
 
-### <a name="Application.Start">func</a> (\*Application) [Start](/src/target/application.go?s=1053:1096#L61)
+### <a name="Application.Start">func</a> (\*Application) [Start](/src/target/application.go?s=1012:1055#L60)
 ``` go
 func (this *Application) Start(host string)
 ```
@@ -62,7 +62,7 @@ func (this *Application) Start(host string)
 
 
 
-### <a name="Application.Verify">func</a> (\*Application) [Verify](/src/target/application.go?s=1208:1284#L70)
+### <a name="Application.Verify">func</a> (\*Application) [Verify](/src/target/application.go?s=1167:1243#L69)
 ``` go
 func (this *Application) Verify(w http.ResponseWriter, r *http.Request) bool
 ```

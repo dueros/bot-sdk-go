@@ -2,10 +2,12 @@ package model
 
 import (
 	"encoding/json"
-	"github.com/dueros/bot-sdk-go/bot/data"
 	"log"
+	"regexp"
 	"strconv"
 	"time"
+
+	"github.com/dueros/bot-sdk-go/bot/data"
 )
 
 const (
@@ -53,6 +55,32 @@ type EventRequest struct {
 	Request
 }
 
+type AudioPlayerEventRequest struct {
+	Data data.AudioPlayerEventRequest
+	EventRequest
+}
+
+type VideoPlayerEventRequest struct {
+	Data data.VideoPlayerEventRequest
+	EventRequest
+}
+
+func (this *EventRequest) GetUrl() string {
+	return this.Data.Request.Url
+}
+
+func (this *EventRequest) GetName() string {
+	return this.Data.Request.Name
+}
+
+func (this *AudioPlayerEventRequest) GetOffsetInMilliseconds() int32 {
+	return this.Data.Request.OffsetInMilliseconds
+}
+
+func (this *VideoPlayerEventRequest) GetOffsetInMilliseconds() int32 {
+	return this.Data.Request.OffsetInMilliseconds
+}
+
 // 获取意图名
 func (this *IntentRequest) GetIntentName() (string, bool) {
 	return this.Dialog.GetIntentName()
@@ -80,8 +108,13 @@ func (this *Request) GetDeviceId() string {
 }
 
 // 获取音频播放上下文
-func (this *Request) getAudioPlayerContext() data.AudioPlayerContext {
+func (this *Request) GetAudioPlayerContext() data.AudioPlayerContext {
 	return this.Common.Context.AudioPlayer
+}
+
+// 获取视频播放上下文
+func (this *Request) GetVideoPlayerContext() data.VideoPlayerContext {
+	return this.Common.Context.VideoPlayer
 }
 
 // 获取access token
@@ -188,6 +221,26 @@ func NewRequest(rawData string) interface{} {
 		}
 		return request
 	} else {
+		if match, _ := regexp.MatchString("^AudioPlayer", requestType); match {
+			request := AudioPlayerEventRequest{}
+			request.Type = requestType
+			request.Common = common
+			if err := json.Unmarshal(jsonBlob, &request.Data); err != nil {
+				log.Println(err)
+				return false
+			}
+			return request
+		} else if match, _ := regexp.MatchString("^VideoPlayer", requestType); match {
+			request := VideoPlayerEventRequest{}
+			request.Type = requestType
+			request.Common = common
+			if err := json.Unmarshal(jsonBlob, &request.Data); err != nil {
+				log.Println(err)
+				return false
+			}
+			return request
+		}
+
 		request := EventRequest{}
 		request.Type = requestType
 		request.Common = common
@@ -196,7 +249,6 @@ func NewRequest(rawData string) interface{} {
 			return false
 		}
 		return request
-
 	}
 	return false
 }

@@ -1,14 +1,17 @@
 package bot
 
 import (
+	"reflect"
+
 	"github.com/dueros/bot-sdk-go/bot/model"
 )
 
 // 技能基础类
 type Bot struct {
-	intentHandler              map[string]func(bot *Bot, request *model.IntentRequest) // 针对intent requset不同intent的处理函数
-	eventHandler               map[string]func(bot *Bot, request *model.EventRequest)  // 针对事件的处理函数
-	defaultEventHandler        func(bot *Bot, request *model.EventRequest)
+	intentHandler map[string]func(bot *Bot, request *model.IntentRequest) // 针对intent requset不同intent的处理函数
+	//eventHandler               map[string]func(bot *Bot, request *model.EventRequest)  // 针对事件的处理函数
+	eventHandler               map[string]func(bot *Bot, request interface{}) // 针对事件的处理函数
+	defaultEventHandler        func(bot *Bot, request interface{})
 	launchRequestHandler       func(bot *Bot, request *model.LaunchRequest)       // 针对技能打开的处理函数
 	sessionEndedRequestHandler func(bot *Bot, request *model.SessionEndedRequest) // 针对技能关闭的处理函数
 	Request                    interface{}                                        // 对当前request的封装，需要在使用时断言，判断当前的类型
@@ -22,10 +25,11 @@ func NewBot(rawRequest string) *Bot {
 
 	return &Bot{
 		intentHandler: make(map[string]func(bot *Bot, request *model.IntentRequest)),
-		eventHandler:  make(map[string]func(bot *Bot, request *model.EventRequest)),
-		Request:       request,
-		Session:       session,
-		Response:      model.NewResponse(session, request),
+		//eventHandler:  make(map[string]func(bot *Bot, request *model.EventRequest)),
+		eventHandler: make(map[string]func(bot *Bot, request interface{})),
+		Request:      request,
+		Session:      session,
+		Response:     model.NewResponse(session, request),
 	}
 }
 
@@ -37,7 +41,7 @@ func (this *Bot) AddIntentHandler(intentName string, fn func(bot *Bot, request *
 }
 
 // 添加对事件的处理函数
-func (this *Bot) AddEventListener(eventName string, fn func(bot *Bot, request *model.EventRequest)) {
+func (this *Bot) AddEventListener(eventName string, fn func(bot *Bot, request interface{})) {
 	if eventName != "" {
 		this.eventHandler[eventName] = fn
 	}
@@ -45,7 +49,7 @@ func (this *Bot) AddEventListener(eventName string, fn func(bot *Bot, request *m
 
 // 添加事件默认处理函数
 // 比如，在播放视频时，技能会收到各种事件的上报，如果不想一一处理可以使用这个来添加处理
-func (this *Bot) AddDefaultEventListener(fn func(bot *Bot, request *model.EventRequest)) {
+func (this *Bot) AddDefaultEventListener(fn func(bot *Bot, request interface{})) {
 	this.defaultEventHandler = fn
 }
 
@@ -74,9 +78,8 @@ func (this *Bot) dispatch() {
 		this.processLaunchHandler(request)
 	case model.SessionEndedRequest:
 		this.processSessionEndedHandler(request)
-	case model.EventRequest:
-		this.processEventHandler(request)
 	}
+	this.processEventHandler(this.Request)
 }
 
 func (this *Bot) processLaunchHandler(request model.LaunchRequest) {
@@ -101,13 +104,16 @@ func (this *Bot) processIntentHandler(request model.IntentRequest) {
 	}
 }
 
-func (this *Bot) processEventHandler(request model.EventRequest) {
-	fn, ok := this.eventHandler[request.Type]
+func (this *Bot) processEventHandler(req interface{}) {
+	rVal := reflect.ValueOf(req)
+	eventType := rVal.FieldByName("Type").Interface().(string)
+
+	fn, ok := this.eventHandler[eventType]
 
 	if ok {
-		fn(this, &request)
+		fn(this, req)
 		return
 	}
 
-	this.defaultEventHandler(this, &request)
+	this.defaultEventHandler(this, req)
 }

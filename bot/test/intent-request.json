@@ -1,0 +1,59 @@
+{
+    "version": "v2.0",
+    "session": {
+        "new": false,
+        "sessionId": "f1bc4b19-1bcf-410f-9d76-f20214d4dc91",
+        "attributes": {}
+    },
+    "context": {
+        "System": {
+            "user": {
+                "userId": "4541",
+                "userInfo": {
+                    "account": [],
+                    "nickname": "kira"
+                }
+            },
+            "application": {
+                "applicationId": "14a6ee9e-3367-f4e3-6698-d8df54c8a104"
+            },
+            "device": {
+                "deviceId": "deviceId",
+                "supportedInterfaces": {
+                    "VoiceInput": {},
+                    "VoiceOutput":{},
+                    "AudioPlayer": {}
+                }
+            },
+            "apiAccessToken": "U3ubvE6lyyDHrk46qGi92fKJmePlfzkaaJAQsta/2C575HI2tJF99JxDsJw3GWwR60V6Z9EyidnX8iaKEUr3TiybHozVf+tN+WbKmWvTX+AnLXHS71Q/Vhh987XNbYT7xPIG32Q4JRYZUTbhBrKuYtNmIj8OA1XZyXJ16Stow4dETlrbKGe6oMAjSzc8EVG8ZX7mpbMS0+gxAPJOkppslUV8VT4cG9AhswFHgBF77iccv8xL3dYUogg6bytzJOmXuGoOlGYiMRr2siPrSt9kEvoeekWdJM5THJbVMiegYLA=",
+            "apiEndPoint": "https://xiaodu.baidu.com"
+        }
+    },
+    "request": {
+        "query": {
+            "type": "TEXT",
+            "original": "北京出发的机票"
+        },
+        "dialogState": "STARTED",
+        "intents": [
+        {
+            "name": "flightSearch",
+            "confirmationStatus": "NONE",
+            "slots": {
+                "departure": {
+                    "name": "departure",
+                    "value": "{\"city\":\"北京\",\"country\":\"中国\",\"origin\":\"北京\",\"province\":\"北京\"}",
+                    "values": [
+                        "{\"city\":\"北京\",\"country\":\"中国\",\"origin\":\"北京\",\"province\":\"北京\"}"
+                        ],
+                    "confirmationStatus": "NONE"
+                }
+            }
+        }
+        ],
+            "type": "IntentRequest",
+            "requestId": "3c53c952cdac46018f26bfb030c7a695_0",
+            "timestamp": "1531750145",
+            "dialogRequestId": "ebd702a8-f1ae-4fa1-b253-495aedbc9a3c"
+    }
+}

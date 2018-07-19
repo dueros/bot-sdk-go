@@ -32,12 +32,19 @@ type Device struct {
 type Context struct {
 	System      System
 	AudioPlayer AudioPlayerContext
+	VideoPlayer VideoPlayerContext
 }
 
 type AudioPlayerContext struct {
 	Token                string
-	OffsetInMilliSeconds int32
-	PlayerActivity       string
+	OffsetInMilliseconds int32 `json:"offsetInMilliSeconds,omitempty"`
+	PlayActivity         string
+}
+
+type VideoPlayerContext struct {
+	Token                string
+	OffsetInMilliseconds int32 `json:"offsetInMilliseconds,omitempty"`
+	PlayActivity         string
 }
 
 type baseRequest struct {
@@ -58,8 +65,25 @@ type RequestPart struct {
 type EventRequest struct {
 	Request struct {
 		baseRequest
+		Token string
+		Url   string `json:"url,omitempty"`
+		Name  string `json:"name,omitempty"`
+	}
+}
+
+type AudioPlayerEventRequest struct {
+	Request struct {
+		baseRequest
 		Token                string
-		OffsetInMilliSeconds int32 `json:"offsetInMilliSeconds,omitempty"` //Audio Player Event
+		OffsetInMilliseconds int32 `json:"offsetInMilliSeconds,omitempty"` //Audio Player Event
+	}
+}
+
+type VideoPlayerEventRequest struct {
+	Request struct {
+		baseRequest
+		Token                string
+		OffsetInMilliseconds int32 `json:"offsetInMilliseconds,omitempty"` //Audio Player Event
 	}
 }
 
