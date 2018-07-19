@@ -17,9 +17,13 @@
   * [func (this *Request) GetBotId() string](#Request.GetBotId)
   * [func (this *Request) GetDeviceId() string](#Request.GetDeviceId)
   * [func (this *Request) GetRequestId() string](#Request.GetRequestId)
+  * [func (this *Request) GetSupportedInterfaces() map[string]interface{}](#Request.GetSupportedInterfaces)
   * [func (this *Request) GetTimestamp() int](#Request.GetTimestamp)
   * [func (this *Request) GetUserId() string](#Request.GetUserId)
   * [func (this *Request) GetVideoPlayerContext() data.VideoPlayerContext](#Request.GetVideoPlayerContext)
+  * [func (this *Request) IsSupportAudio() bool](#Request.IsSupportAudio)
+  * [func (this *Request) IsSupportDisplay() bool](#Request.IsSupportDisplay)
+  * [func (this *Request) IsSupportVideo() bool](#Request.IsSupportVideo)
   * [func (this *Request) VerifyBotID(myBotID string) bool](#Request.VerifyBotID)
   * [func (this *Request) VerifyTimestamp() bool](#Request.VerifyTimestamp)
 
@@ -48,7 +52,7 @@ type Request struct {
 
 
 
-### <a name="Request.GetAccessToken">func</a> (\*Request) [GetAccessToken](/src/target/request.go?s=3007:3051#L121)
+### <a name="Request.GetAccessToken">func</a> (\*Request) [GetAccessToken](/src/target/request.go?s=3041:3085#L121)
 ``` go
 func (this *Request) GetAccessToken() string
 ```
@@ -57,7 +61,7 @@ func (this *Request) GetAccessToken() string
 
 
 
-### <a name="Request.GetAudioPlayerContext">func</a> (\*Request) [GetAudioPlayerContext](/src/target/request.go?s=2726:2794#L111)
+### <a name="Request.GetAudioPlayerContext">func</a> (\*Request) [GetAudioPlayerContext](/src/target/request.go?s=2760:2828#L111)
 ``` go
 func (this *Request) GetAudioPlayerContext() data.AudioPlayerContext
 ```
@@ -66,7 +70,7 @@ func (this *Request) GetAudioPlayerContext() data.AudioPlayerContext
 
 
 
-### <a name="Request.GetBotId">func</a> (\*Request) [GetBotId](/src/target/request.go?s=3406:3444#L140)
+### <a name="Request.GetBotId">func</a> (\*Request) [GetBotId](/src/target/request.go?s=3440:3478#L140)
 ``` go
 func (this *Request) GetBotId() string
 ```
@@ -75,7 +79,7 @@ func (this *Request) GetBotId() string
 
 
 
-### <a name="Request.GetDeviceId">func</a> (\*Request) [GetDeviceId](/src/target/request.go?s=2597:2638#L106)
+### <a name="Request.GetDeviceId">func</a> (\*Request) [GetDeviceId](/src/target/request.go?s=2631:2672#L106)
 ``` go
 func (this *Request) GetDeviceId() string
 ```
@@ -84,7 +88,7 @@ func (this *Request) GetDeviceId() string
 
 
 
-### <a name="Request.GetRequestId">func</a> (\*Request) [GetRequestId](/src/target/request.go?s=3302:3344#L135)
+### <a name="Request.GetRequestId">func</a> (\*Request) [GetRequestId](/src/target/request.go?s=3336:3378#L135)
 ``` go
 func (this *Request) GetRequestId() string
 ```
@@ -93,7 +97,16 @@ func (this *Request) GetRequestId() string
 
 
 
-### <a name="Request.GetTimestamp">func</a> (\*Request) [GetTimestamp](/src/target/request.go?s=3137:3176#L126)
+### <a name="Request.GetSupportedInterfaces">func</a> (\*Request) [GetSupportedInterfaces](/src/target/request.go?s=3753:3821#L155)
+``` go
+func (this *Request) GetSupportedInterfaces() map[string]interface{}
+```
+获取设备支持的接口类型
+
+
+
+
+### <a name="Request.GetTimestamp">func</a> (\*Request) [GetTimestamp](/src/target/request.go?s=3171:3210#L126)
 ``` go
 func (this *Request) GetTimestamp() int
 ```
@@ -102,7 +115,7 @@ func (this *Request) GetTimestamp() int
 
 
 
-### <a name="Request.GetUserId">func</a> (\*Request) [GetUserId](/src/target/request.go?s=2487:2526#L101)
+### <a name="Request.GetUserId">func</a> (\*Request) [GetUserId](/src/target/request.go?s=2521:2560#L101)
 ``` go
 func (this *Request) GetUserId() string
 ```
@@ -111,7 +124,7 @@ func (this *Request) GetUserId() string
 
 
 
-### <a name="Request.GetVideoPlayerContext">func</a> (\*Request) [GetVideoPlayerContext](/src/target/request.go?s=2871:2939#L116)
+### <a name="Request.GetVideoPlayerContext">func</a> (\*Request) [GetVideoPlayerContext](/src/target/request.go?s=2905:2973#L116)
 ``` go
 func (this *Request) GetVideoPlayerContext() data.VideoPlayerContext
 ```
@@ -120,7 +133,34 @@ func (this *Request) GetVideoPlayerContext() data.VideoPlayerContext
 
 
 
-### <a name="Request.VerifyBotID">func</a> (\*Request) [VerifyBotID](/src/target/request.go?s=3709:3762#L155)
+### <a name="Request.IsSupportAudio">func</a> (\*Request) [IsSupportAudio](/src/target/request.go?s=4244:4286#L175)
+``` go
+func (this *Request) IsSupportAudio() bool
+```
+检查是否支持音频播放
+
+
+
+
+### <a name="Request.IsSupportDisplay">func</a> (\*Request) [IsSupportDisplay](/src/target/request.go?s=4117:4161#L170)
+``` go
+func (this *Request) IsSupportDisplay() bool
+```
+检查是否支持展现
+
+
+
+
+### <a name="Request.IsSupportVideo">func</a> (\*Request) [IsSupportVideo](/src/target/request.go?s=4373:4415#L180)
+``` go
+func (this *Request) IsSupportVideo() bool
+```
+检查是否支持视频播放
+
+
+
+
+### <a name="Request.VerifyBotID">func</a> (\*Request) [VerifyBotID](/src/target/request.go?s=4495:4548#L185)
 ``` go
 func (this *Request) VerifyBotID(myBotID string) bool
 ```
@@ -129,7 +169,7 @@ func (this *Request) VerifyBotID(myBotID string) bool
 
 
 
-### <a name="Request.VerifyTimestamp">func</a> (\*Request) [VerifyTimestamp](/src/target/request.go?s=3545:3588#L145)
+### <a name="Request.VerifyTimestamp">func</a> (\*Request) [VerifyTimestamp](/src/target/request.go?s=3579:3622#L145)
 ``` go
 func (this *Request) VerifyTimestamp() bool
 ```
@@ -243,7 +283,7 @@ func (this *IntentRequest) GetIntentName() (string, bool)
 
 
 
-### <a name="IntentRequest.GetQuery">func</a> (\*IntentRequest) [GetQuery](/src/target/request.go?s=2369:2413#L95)
+### <a name="IntentRequest.GetQuery">func</a> (\*IntentRequest) [GetQuery](/src/target/request.go?s=2403:2447#L95)
 ``` go
 func (this *IntentRequest) GetQuery() string
 ```

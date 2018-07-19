@@ -173,7 +173,7 @@ func (this *IntentRequest) GetIntentName() (string, bool)
 
 
 
-### <a name="IntentRequest.GetQuery">func</a> (\*IntentRequest) [GetQuery](/src/target/request.go?s=2369:2413#L95)
+### <a name="IntentRequest.GetQuery">func</a> (\*IntentRequest) [GetQuery](/src/target/request.go?s=2403:2447#L95)
 ``` go
 func (this *IntentRequest) GetQuery() string
 ```

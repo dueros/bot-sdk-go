@@ -88,7 +88,7 @@ func (this *IntentRequest) GetIntentName() (string, bool) {
 
 // 槽位填充是否完成
 func (this *IntentRequest) IsDialogStateCompleted() bool {
-	return true
+	return this.Dialog.DialogState == "COMPLETED"
 }
 
 // 获取用户请求query
@@ -149,6 +149,36 @@ func (this *Request) VerifyTimestamp() bool {
 	}
 
 	return false
+}
+
+// 获取设备支持的接口类型
+func (this *Request) GetSupportedInterfaces() map[string]interface{} {
+	return this.Common.Context.System.Device.SupportedInterfaces
+}
+
+func (this *Request) isSupportInterface(support string) bool {
+	supportedInterfaces := this.GetSupportedInterfaces()
+	_, ok := supportedInterfaces[support]
+
+	if ok {
+		return true
+	}
+	return false
+}
+
+// 检查是否支持展现
+func (this *Request) IsSupportDisplay() bool {
+	return this.isSupportInterface("Display")
+}
+
+// 检查是否支持音频播放
+func (this *Request) IsSupportAudio() bool {
+	return this.isSupportInterface("AudioPlayer")
+}
+
+// 检查是否支持视频播放
+func (this *Request) IsSupportVideo() bool {
+	return this.isSupportInterface("VideoPlayer")
 }
 
 // 验证技能id合法性

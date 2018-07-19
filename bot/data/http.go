@@ -26,7 +26,8 @@ type Application struct {
 }
 
 type Device struct {
-	DeviceId string
+	DeviceId            string
+	SupportedInterfaces map[string]interface{}
 }
 
 type Context struct {
