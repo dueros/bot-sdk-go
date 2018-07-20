@@ -74,10 +74,13 @@ func (this *Bot) dispatch() {
 	switch request := this.Request.(type) {
 	case model.IntentRequest:
 		this.processIntentHandler(request)
+		return
 	case model.LaunchRequest:
 		this.processLaunchHandler(request)
+		return
 	case model.SessionEndedRequest:
 		this.processSessionEndedHandler(request)
+		return
 	}
 	this.processEventHandler(this.Request)
 }
