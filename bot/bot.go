@@ -19,18 +19,23 @@ type Bot struct {
 	Response                   *model.Response                                    // 对技能返回的封装
 }
 
-func NewBot(rawRequest string) *Bot {
-	request := model.NewRequest(rawRequest)
-	session := model.NewSession(model.GetSessionData(rawRequest))
-
+// 创建常驻bot类，可维持在内存状态中, addhandler 和 addEventer事件可以缩减为一次
+func NewBot() *Bot {
 	return &Bot{
 		intentHandler: make(map[string]func(bot *Bot, request *model.IntentRequest)),
-		//eventHandler:  make(map[string]func(bot *Bot, request *model.EventRequest)),
-		eventHandler: make(map[string]func(bot *Bot, request interface{})),
-		Request:      request,
-		Session:      session,
-		Response:     model.NewResponse(session, request),
+		eventHandler:  make(map[string]func(bot *Bot, request interface{})),
 	}
+}
+
+// 根据每个请求分别处理
+func (this *Bot) Handler(request string) string {
+	this.Request = model.NewRequest(request)
+	this.Session = model.NewSession(model.GetSessionData(request))
+	this.Response = model.NewResponse(this.Session, this.Request)
+
+	this.dispatch()
+
+	return this.Response.Build()
 }
 
 // 添加对intent的处理函数
@@ -62,12 +67,6 @@ func (this *Bot) OnLaunchRequest(fn func(bot *Bot, request *model.LaunchRequest)
 // TIP: 根据协议，技能关闭返回的结果，DuerOS不会返回给用户。
 func (this *Bot) OnSessionEndedRequest(fn func(bot *Bot, request *model.SessionEndedRequest)) {
 	this.sessionEndedRequestHandler = fn
-}
-
-func (this *Bot) Run() string {
-	this.dispatch()
-
-	return this.Response.Build()
 }
 
 func (this *Bot) dispatch() {
@@ -118,5 +117,7 @@ func (this *Bot) processEventHandler(req interface{}) {
 		return
 	}
 
-	this.defaultEventHandler(this, req)
+	if this.defaultEventHandler != nil {
+		this.defaultEventHandler(this, req)
+	}
 }
