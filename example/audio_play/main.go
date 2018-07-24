@@ -9,7 +9,7 @@ import (
 
 func main() {
 
-	bot := dueros.CreateBot()                     // 创建bot 只创建一次
+	bot := dueros.NewBot()                        // 创建bot 只创建一次
 	bot.AddDefaultEventListener(defaultRequest)   // 添加默认事件的监听
 	bot.AddIntentHandler("start_play", startPlay) // 添加开始播放的意图
 	bot.OnLaunchRequest(launchRequest)            // 添加启动意图

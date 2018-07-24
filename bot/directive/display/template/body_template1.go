@@ -17,7 +17,7 @@ type BodyTemplate1 struct {
 	TextContent struct {
 		Position string `json:"position"`
 		Text     *Text  `json:"text"`
-	} `json:"content"`
+	} `json:"textContent"`
 }
 
 func NewBodyTemplate1() *BodyTemplate1 {
